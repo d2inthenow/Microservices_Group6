@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: duongtok3/auth
+          image: asia.gcr.io/ticketing-d2dev/auth
 
 ---
 apiVersion: v1
