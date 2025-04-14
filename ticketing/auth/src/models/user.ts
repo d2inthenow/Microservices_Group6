@@ -19,16 +19,28 @@ interface UserDoc extends mongoose.Document {
   password: string;
 }
 
-const userSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
+const userSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
   },
-  password: {
-    type: String,
-    required: true,
-  },
-});
+  {
+    toJSON: {
+      transform(doc, ret) {
+        ret.id = ret._id; // Thay đổi tên thuộc tính _id thành id
+        delete ret._id; // Xóa thuộc tính _id khỏi đối tượng JSON trả về
+        delete ret.password; // Xóa thuộc tính password khỏi đối tượng JSON trả về
+        delete ret.__v; // Xóa thuộc tính __v khỏi đối tượng JSON trả về
+      },
+    },
+  }
+);
 
 // Mã hóa mật khẩu trước khi lưu vào MongoDB
 userSchema.pre("save", async function (done) {
