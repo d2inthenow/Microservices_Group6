@@ -1,5 +1,5 @@
 import express from "express";
-import "express-async-errors"; // Giúp xử lý các lỗi bất đồng bộ
+import "express-async-errors";
 import { json } from "body-parser";
 import mongoose from "mongoose";
 import cookieSession from "cookie-session";
@@ -12,12 +12,12 @@ import { errorHandler } from "./middlewares/error-handler";
 import { NotFoundError } from "./errors/not-found-error";
 
 const app = express();
-app.set("trust proxy", true); // Để sử dụng cookie trên HTTPS
+app.set("trust proxy", true);
 app.use(json());
 app.use(
   cookieSession({
-    signed: false, // Không mã hóa cookie
-    secure: true, // Chỉ sử dụng secure nếu đang chạy trên HTTPS
+    signed: false,
+    secure: true,
   })
 );
 
@@ -26,12 +26,10 @@ app.use(signinRouter);
 app.use(signoutRouter);
 app.use(signupRouter);
 
-// Route để bắt tất cả các route không xác định và ném lỗi NotFoundError
-app.all("*", async (req, res, next) => {
-  next(new NotFoundError()); // Dùng next để chuyển lỗi đến middleware
+app.all("*", async (req, res) => {
+  throw new NotFoundError();
 });
 
-// Middleware xử lý lỗi
 app.use(errorHandler);
 
 const start = async () => {
@@ -41,13 +39,14 @@ const start = async () => {
 
   try {
     await mongoose.connect("mongodb://auth-mongo-srv:27017/auth");
-    console.log("Connected to MongoDB");
-  } catch (error) {
-    console.error(error);
+
+    console.log("Connected to MongoDb");
+  } catch (err) {
+    console.error(err);
   }
 
   app.listen(3000, () => {
-    console.log("Auth service listening on port 3000!");
+    console.log("Listening on port 3000!!!!!!!!");
   });
 };
 
