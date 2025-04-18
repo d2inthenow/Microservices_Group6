@@ -1,8 +1,13 @@
+# client/Dockerfile
 FROM node:alpine
 
 WORKDIR /app
-COPY package.json .
+
+COPY package.json ./
 RUN npm install
+
 COPY . .
 
-CMD ["npm", "run", "dev"]
+RUN npm run build  # 🔧 build trước khi start
+
+CMD ["npm", "start"]  # 🔧 start ở chế độ production
