@@ -1,4 +1,10 @@
-const Landing = () => {
+import buildClient from "../api/build-client";
+
+const LandingPage = ({ currentUser }) => {
+  console.log(currentUser);
+  // axios.get("/api/users/currentuser").catch((err) => {
+  //   console.log(err.message);
+  // });
   return (
     <div>
       <h1>Ticketing!!!!</h1>
@@ -7,4 +13,11 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+LandingPage.getInitialProps = async (context) => {
+  const client = buildClient(context);
+  const { data } = await client.get("/api/users/currentuser");
+
+  return data;
+};
+
+export default LandingPage;
