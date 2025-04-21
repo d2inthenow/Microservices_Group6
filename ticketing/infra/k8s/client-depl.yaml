@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: client
-          image: asia.gcr.io/ticketing-d2dev/client
+          # image: asia.gcr.io/ticketing-d2dev/client
+          image: duongtok3/client
 
 ---
 apiVersion: v1

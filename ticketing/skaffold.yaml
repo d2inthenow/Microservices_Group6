@@ -7,12 +7,13 @@ deploy:
       - infra/k8s/*
 
 build:
-  # local:
-  #   push: false
-  googleCloudBuild:
-    projectId: ticketing-d2dev
+  local:
+    push: false
+  # googleCloudBuild:
+  #   projectId: ticketing-d2dev
   artifacts:
-    - image: asia.gcr.io/ticketing-d2dev/auth
+    # - image: asia.gcr.io/ticketing-d2dev/auth
+    - image: duongtok3/auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -20,7 +21,8 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: asia.gcr.io/ticketing-d2dev/client
+    # - image: asia.gcr.io/ticketing-d2dev/client
+    - image: duongtok3/client
       context: client
       docker:
         dockerfile: Dockerfile

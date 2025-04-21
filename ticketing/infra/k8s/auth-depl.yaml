@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: auth
-          image: asia.gcr.io/ticketing-d2dev/auth
+          # image: asia.gcr.io/ticketing-d2dev/auth
+          image: duongtok3/auth
           env:
             - name: JWT_KEY
               valueFrom:
