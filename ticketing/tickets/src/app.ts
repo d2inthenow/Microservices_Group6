@@ -14,7 +14,7 @@ app.use(
   cookieSession({
     signed: false,
     // secure: process.env.NODE_ENV !== "test",
-    secure: false, // dùng với local
+    secure: false, // dùng với local và test thực tế phải là true để bảo mật cookie (https)
   })
 );
 app.use(currentUser);

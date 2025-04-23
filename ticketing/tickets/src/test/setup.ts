@@ -12,6 +12,8 @@ declare global {
 let mongo: any;
 beforeAll(async () => {
   process.env.JWT_KEY = "testkey";
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
   mongo = await MongoMemoryServer.create();
   const mongoUri = mongo.getUri();
 
@@ -57,12 +59,6 @@ global.signin = () => {
   // Take JSON and encode it as base64
   const base64 = Buffer.from(sessionJSON).toString("base64");
 
-  const cookie = `express:sess=${base64}`;
-
-  console.log("SIGNIN COOKIE:", cookie);
-
-  console.log("JWT Created:", token);
-
   // return a string that's the cookie with the encoded data
-  return [`express:sess=${base64}`];
+  return [`session=${base64}`];
 };
