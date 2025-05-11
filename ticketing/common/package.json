@@ -1,6 +1,6 @@
 {
   "name": "@d2tickets/common",
-  "version": "1.0.9",
+  "version": "1.0.22",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
   "files": [
@@ -8,8 +8,8 @@
   ],
   "scripts": {
     "clean": "del-cli ./build/*",
-    "build": "npm run clean && tsc ",
-    "pub": "npm version patch && npm run build && npm publish "
+    "build": "npm run clean && tsc",
+    "pub": "npm version patch && npm run build && npm publish --access public"
   },
   "keywords": [],
   "author": "",

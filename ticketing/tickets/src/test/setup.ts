@@ -8,6 +8,7 @@ import jwt from "jsonwebtoken";
 declare global {
   var signin: () => string[];
 }
+jest.mock("../nats-wrapper");
 
 let mongo: any;
 beforeAll(async () => {
@@ -21,6 +22,8 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
+  jest.clearAllMocks();
+
   const db = mongoose.connection.db;
   if (!db) {
     throw new Error("Database connection is not established");

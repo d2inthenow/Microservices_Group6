@@ -7,6 +7,9 @@ import {
   NotAuthorizedError,
 } from "@d2tickets/common";
 import { Ticket } from "../models/tickets";
+import { TicketUpdatedPublisher } from "../events/publishers/ticket-updated-pubisher";
+import { natsWrapper } from "../nats-wrapper";
+
 const router = express.Router();
 
 router.put(
@@ -34,6 +37,13 @@ router.put(
       price: req.body.price,
     });
     await ticket.save();
+    // Publish an event saying that this ticket was updated
+    new TicketUpdatedPublisher(natsWrapper.client).publish({
+      id: ticket.id,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId,
+    });
 
     res.send(ticket);
   }
