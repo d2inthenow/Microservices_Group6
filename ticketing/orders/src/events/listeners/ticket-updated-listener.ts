@@ -11,7 +11,7 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
     const { id, title, price } = data;
 
     // Find the ticket
-    const ticket = await Ticket.findById(id);
+    const ticket = await Ticket.findByEvent(data);
 
     // If not found, throw an error
     if (!ticket) {
