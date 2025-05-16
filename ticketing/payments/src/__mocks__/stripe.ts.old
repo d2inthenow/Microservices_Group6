@@ -1,0 +1,6 @@
+// This file is used to mock the Stripe library in tests
+export const stripe = {
+  charges: {
+    create: jest.fn().mockResolvedValue({}),
+  },
+};
