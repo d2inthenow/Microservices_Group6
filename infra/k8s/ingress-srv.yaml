@@ -1,0 +1,44 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-srv
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true" # ✅ Cho phép sử dụng regex
+spec:
+  ingressClassName: nginx
+
+  rules:
+    - host: posts.com
+      http:
+        paths:
+          - path: /posts/create
+            pathType: Prefix # ✅ Giữ nguyên Prefix nếu không dùng regex
+            backend:
+              service:
+                name: posts-clusterip-srv
+                port:
+                  number: 4000
+
+          - path: /posts
+            pathType: Prefix
+            backend:
+              service:
+                name: query-srv
+                port:
+                  number: 4002
+
+          - path: /posts/.*/comments # ✅ Sử dụng regex hợp lệ (không có ?)
+            pathType: ImplementationSpecific # ✅ Dùng ImplementationSpecific thay vì Prefix
+            backend:
+              service:
+                name: comments-srv
+                port:
+                  number: 4001
+
+          - path: /.* # ✅ Regex cho tất cả đường dẫn khác
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: client-srv
+                port:
+                  number: 3000
